@@ -37,7 +37,7 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         yarn --frozen-lockfile
-        yarn install nyc mocha --frozen-lockfile
+        yarn add nyc mocha --frozen-lockfile
     - name: Run Tests
       run: nyc mocha --exit -- ${{ matrix.test-file }}
 
