@@ -39,6 +39,8 @@ jobs:
         yarn --frozen-lockfile
         yarn add nyc mocha --frozen-lockfile
     - name: Run Tests
-      run: npx nyc mocha --exit -- ./test/${{ matrix.test-file }}
+      uses: GabrielBB/xvfb-action@v1
+      with:
+        run: npx nyc mocha --exit -- ./test/${{ matrix.test-file }}
 
     
