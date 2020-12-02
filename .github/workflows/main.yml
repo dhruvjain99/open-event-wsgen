@@ -32,7 +32,6 @@ jobs:
       with:
         path: ./node_modules
         key: ${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
-
     - name: Install Dependencies
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
@@ -40,5 +39,8 @@ jobs:
         yarn add nyc mocha --frozen-lockfile
     - name: Run Tests
       run: npx nyc mocha --exit -- ./test/${{ matrix.test-file }}
+    - name: Upload coverage reports
+      if: ${{ matrix.test-file }} == 'serverTest.js'
+      run: bash <(curl -s https://codecov.io/bash);
 
     
