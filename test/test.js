@@ -9,6 +9,7 @@ const webdriver = require('selenium-webdriver');
 //   .forBrowser('chrome')
 //   .withCapabilities(chromeCapabilities)
 //   .build();
+const chrome = require('selenium-webdriver/chrome');
 const screen = {
     width: 1920,
     height: 1080
