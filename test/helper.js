@@ -18,10 +18,15 @@ function getDriver() {
       ]
     }
   };
+  
+  const screen = {
+    width: 1920,
+    height: 1080
+  };
 
   return new webdriver.Builder()
   .forBrowser('chrome')
-  .setChromeOptions(new chrome.Options().headless())
+  .setChromeOptions(new chrome.Options().headless().windowSize(screen))
   .build();
 }
 
