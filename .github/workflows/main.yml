@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        test-file: [test.js]
+        test-file: [tracks.js]
     services:
       redis:
         image: redis

@@ -67,7 +67,7 @@ TrackPage.checkIsolatedTrackFilter = function() {
 
   return self.find(By.className('track-room-names')).findElements(By.className('track-name')).then(function(elems) {
     // Clicking on the Open Tech Track
-    return elems[16].click().then(self.getNumTracksVisible.bind(self));
+    return elems[1].click().then(self.getNumTracksVisible.bind(self));
   });
 };
 
