@@ -9,11 +9,7 @@ services:
   - xvfb
 
 env:
-  - TESTFOLDER=test/serverTest.js
-  - TESTFOLDER=test/roomsAndSpeakers.js
   - TESTFOLDER=test/tracks.js
-  - TESTFOLDER=test/generatorAndSchedule.js
-  - TESTFOLDER=test/sessionEventAndCoC.js
 
 addons:
   chrome: stable
