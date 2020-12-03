@@ -13,7 +13,8 @@ function getDriver() {
       args: [
         '--window-size=1920,1080',
         '--start-maximized',
-        '--no-sandbox'
+        '--no-sandbox',
+        '--headless'
       ],
       localState: {
         "browser.enabled_labs_experiments": ["calculate-native-win-occlusion@2"],
