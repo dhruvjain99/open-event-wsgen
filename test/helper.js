@@ -12,8 +12,12 @@ function getDriver() {
       },
       args: [
         '--window-size=1920,1080',
-        '--start-maximized'
-      ]
+        '--start-maximized',
+        '--no-sandbox'
+      ],
+      localState: {
+        "browser.enabled_labs_experiments": ["calculate-native-win-occlusion@2"],
+      }
     }
   };
 
