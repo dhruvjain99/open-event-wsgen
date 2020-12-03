@@ -1,0 +1,47 @@
+name: Build and Test
+
+on:
+  pull_request:
+    branches: [master, development]
+
+jobs:
+  buildAndTest:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        test-file: [tracks.js]
+    services:
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports: 
+          - 6379:6379
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2.1.2
+      with: 
+        node-version: 12.x
+    - name: Cache node modules
+      uses: actions/cache@v2
+      id: cache
+      with:
+        path: ./node_modules
+        key: ${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
+    - name: Install Dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        yarn --frozen-lockfile
+        yarn add nyc mocha --frozen-lockfile
+    - run: sudo apt-get install xvfb
+    - name: Run Tests
+      run: xvfb-run --auto-servernum npx nyc mocha --exit -- ./test/${{ matrix.test-file }}
+    - name: Upload coverage reports
+      if: ${{ matrix.test-file }} == 'serverTest.js'
+      run: bash <(curl -s https://codecov.io/bash);
+
+    
