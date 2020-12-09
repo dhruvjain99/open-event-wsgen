@@ -39,7 +39,7 @@ jobs:
         yarn add nyc mocha --frozen-lockfile
     - run: sudo apt-get install xvfb
     - name: Run Tests
-      run: xvfb-run --auto-servernum npx nyc mocha --exit -- ./test/${{ matrix.test-file }}
+      run: xvfb -screen 0 1920x1080x32 npx nyc mocha --exit -- ./test/${{ matrix.test-file }}
     - name: Upload coverage reports
       if: ${{ matrix.test-file }} == 'serverTest.js'
       run: bash <(curl -s https://codecov.io/bash);
