@@ -72,6 +72,17 @@ describe("Running Selenium tests on Chrome Driver", function () {
 
   before(function () {
     driver = getDriver();
+    setTimeout(function() {
+      driver.executeScript(function() {
+          return {
+              width: window.screen.availWidth,
+              height: window.screen.availHeight
+          };
+      }).then(function(result) {
+          driver.manage().window().setPosition(0,0);
+          driver.manage().window().setSize(result.width, result.height);
+      });
+    });
   });
 
   after(function () {

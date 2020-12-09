@@ -73,6 +73,17 @@ describe("Running Selenium tests on Chrome Driver", function() {
 
   before(function() {
     driver = getDriver();
+    setTimeout(function() {
+      driver.executeScript(function() {
+          return {
+              width: window.screen.availWidth,
+              height: window.screen.availHeight
+          };
+      }).then(function(result) {
+          driver.manage().window().setPosition(0,0);
+          driver.manage().window().setSize(result.width, result.height);
+      });
+    });
   });
 
   after(function() {
@@ -156,6 +167,7 @@ describe("Running Selenium tests on Chrome Driver", function() {
     });
 
     it('Checking the working of social buttons', function(done) {
+      roomPage.visit('http://localhost:3000/live/preview/a@a.com/FOSSASIASummit2017/rooms.html');
       roomPage.checkSocialLinks().then(function(num) {
         assert.equal(num, 5);
         done();

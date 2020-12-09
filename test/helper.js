@@ -10,10 +10,7 @@ function getDriver() {
           'prompt_for_download': false
         }
       },
-      args: [
-        '--window-size=1920,1080',
-        '--start-maximized'
-      ]
+      args: ["--headless", "--disable-gpu", "--window-size=1920,1080"]
     }
   };
 
