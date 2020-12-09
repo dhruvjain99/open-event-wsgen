@@ -37,8 +37,8 @@ jobs:
       run: |
         yarn --frozen-lockfile
         yarn add nyc mocha --frozen-lockfile
-    - run: sudo apt-get install xvfb
-    - run: xvfb -screen 0 1920x1080x8
+    # - run: sudo apt-get install xvfb
+    # - run: xvfb -screen 0 1920x1080x8
     - name: Run Tests
       run: xvfb-run npx nyc mocha --exit -- ./test/${{ matrix.test-file }}
     - name: Upload coverage reports
