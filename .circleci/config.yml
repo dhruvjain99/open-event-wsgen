@@ -1,16 +1,20 @@
-version: 2.0
+version: 2.1
 
 jobs:
   test:
     docker:
-      - image: circleci/node:12.9.1-stretch-browsers
+      - image: circleci/node:12.9.1
       - image: circleci/redis:stretch
-    parallelism: 4
+    # parallelism: 4
     steps:
       - checkout
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - run:
           name: Check if redis is active
           command: dockerize -wait tcp://localhost:6379 -timeout 1m
+      - run: google-chrome --version
+      - run: chromedriver --version
       - restore_cache:
           keys:
             - node-v1-{{ checksum "package-lock.json" }}
@@ -24,19 +28,12 @@ jobs:
            - ./node_modules/
       - run:
           name: Split Tests by time
-          command: circleci tests glob "test/*.js" | circleci tests --split-by=timings --timings-type=classname split > /tmp/tests-to-run
+          command: circleci tests glob "test/roomsAndSpeakers.js" | circleci tests --split-by=timings --timings-type=classname split > /tmp/tests-to-run
       - run:
           name: Run Tests
           command: npx nyc mocha --exit $(cat /tmp/tests-to-run)
-      - run:
-          name: Upload codecov report for serverTest
-          command: |
-            if ([ "$TESTFOLDER" == "test/serverTest.js" ]); then
-              bash <(curl -s https://codecov.io/bash);
-            fi
-      - run:
-          name: Exit Successfully
-          command: exit 0
+orbs:
+  browser-tools: circleci/browser-tools@1.1.1
 
 workflows:
   version: 2
